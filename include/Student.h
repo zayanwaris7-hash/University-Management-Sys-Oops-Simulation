@@ -11,7 +11,9 @@ getRole()*/
 #include<windows.h>
 #include <limits>
 #include"User.h"
+#include"Manager.h"
 #include"TransportationPass.h"
+Manager m;
 using namespace std;
 class Student:public User{
     protected:
@@ -19,8 +21,9 @@ class Student:public User{
      TransportationPass* pass;
     public:
       Student():registrationNumber(""){}
+      //------------------------------------------
       Student(string a,string b,string c,bool d,string e):User(a,b,c,d),registrationNumber(e){}
-    
+        //----------------------------------------------------------------------------------------------
       void display()override{
         cout<<"====( Profile )===="<<endl;
         cout<<" Name     : "<<name<<endl;
@@ -29,27 +32,50 @@ class Student:public User{
         cout<<" Registratition Number : "<<registrationNumber<<endl;
         return;
       }
+      //-------------------------------------
       string getRole()override{ return "student";}
+      //----------------------------------------------------
+      void  ViewRoute(Manager m){
+         
+      }
+      //------------------------------------------------
+       void ApplyTransport(Manager m){
 
-      void menu(){
+      }
+      //-----------------------------------
+      
+      void ViewRegistration(Manager m){
+
+      }
+      //---------------------------------------
+      void CancelRegistration(Manager m){
+
+      }
+      //--------------------------------------
+      void Logout(Manager m){
+
+      }
+    
+      //---------------------------------------------------------------
+      void menu()override{
              int choice;
              do{
                 cout<<"=======( STUDENT MENU )======="<<endl;
-                cout<<"1. View Routes\n2. Apply Transport\n3. View Registration\n4. Cancel Registration\n5. Display Profile\n6. Logout "<<endl;
+                cout<<"1. View Routes\n2. Apply Transport\n3. View Registration\n4. Cancel Registration\n5. Display Profile\n6. Logout\n "<<endl;
                 cin>>choice;
-                 while (cin.fail() || cin.peek() == '.')
+                 while (cin.fail() || cin.peek() == '.'|| choice<1 || choice>6)
                 {
-                cout << "Invalid Choice ! ( 1 to 6)  "<<endl;;
+                cout << "Invalid Choice ! ( 1 to 7)  "<<endl;;
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cin >> choice;
                 }
-               // if(choice==1) ViewRoute();
-               // else if(choice==2) ApplyTransport();
-               // else if(choice==1) ViewRegistration();
-               // else if(choice==1) CancelRegistration();
-              //  else if(choice==1) display();
-               // else if(choice==1) Logout();
+                if(choice==1) ViewRoute(m);
+                else if(choice==2) ApplyTransport(m);
+                else if(choice==3) ViewRegistration(m);
+                else if(choice==4) CancelRegistration(m);
+                else if(choice==5) display();
+               // else if(choice==6) Logout(m);
              }while(choice!=6);
       }
       ~Student()override{}
