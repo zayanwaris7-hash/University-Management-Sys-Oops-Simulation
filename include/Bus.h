@@ -28,6 +28,13 @@ public:
     string getType() override { return "bus"; }
     float Fee() override { return fee; }
     bool checkAvailability() override { return isAvailible; }
+    void occuppiedSeat(){
+        occupiedSeats++;
+    };
+    int getOccupiedSeat(){
+        if(occupiedSeats==capacity){return 0;}
+        return occupiedSeats;}
+    int getTotalSeat(){return capacity;}
 
     void displayVehicle() override
     {
