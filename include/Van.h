@@ -11,8 +11,13 @@ class Van:public Vehicle{
      Van():isAirCondAvailable(false){}
      Van(string a, string b,int c,int d,string e,float f,bool h):Vehicle(a,b,c,d,e,f),isAirCondAvailable(h){}
      
+     string getId(){return vehicleId;}
+     string setId(string a){vehicleId=a;}
      string getType()override{return "van";}
      float Fee()override{return fee;}
+     void occuppiedSeat(){
+        occupiedSeats++;
+    };
      bool checkAvailability()override{return isAvailible;}
       
      void displayVehicle()override{
@@ -29,11 +34,10 @@ class Van:public Vehicle{
      }
      
 
-     Van &AddInfo()
+     Van &AddInfo(string b)
     {
         cout << "========( Van Info )========" << endl;
-        cout << "Enter Van Id (eg B01) : ";
-        cin >> vehicleId;
+         vehicleId=b;
         cout << endl;
         cout << "Enter Van Number : ";
         cin >> vehicleNumber;

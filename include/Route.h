@@ -38,6 +38,10 @@ public:
         assignedBus->occuppiedSeat();
         return true;
     };
+
+    Bus* getAssignedBus(){return assignedBus;}
+    Van* getAssignedVan(){return assignedVan;}
+    
     void diplayRoute()
     {
         cout << "========( ROUTE DISPLAY )========" << endl;
@@ -81,6 +85,26 @@ public:
         cout<<endl;
         cout<<"[STATUS] Succesfully Assigned "<<endl;
     }
+    void addinfo(string rId){
+        routeId = rId;
+        cout << "----------( Route Info )----------" << endl;
+        cout << "Route ID assigned: " << routeId << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Enter Start Point (City/Station): ";
+        getline(cin, startPoint);
+        cout << "Enter End Point (City/Station): ";
+        getline(cin, endPoint);
+        cout << "Enter Distance (in km): ";
+        cin >> distance;
+        while (cin.fail() || distance <= 0.0) {
+            cout << "Invalid input! Distance must be a positive number.\nEnter Distance (in km): ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> distance;
+        }
+        cout << "\n[SUCCESS] Route details saved successfully!" << endl;
+    }
     ~Route() {}
+
 };
 #endif

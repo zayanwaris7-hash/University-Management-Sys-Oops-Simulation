@@ -22,7 +22,7 @@ class Student:public User{
     public:
       Student():registrationNumber(""){}
       //------------------------------------------
-      Student(string a,string b,string c,bool d,string e):User(a,b,c,d),registrationNumber(e){}
+      Student(string a,string b,string c,bool d,string e):User(a,b,c,d),registrationNumber(e),pass(){}
         //----------------------------------------------------------------------------------------------
       void display()override{
         cout<<"====( Profile )===="<<endl;
@@ -32,6 +32,11 @@ class Student:public User{
         cout<<" Registratition Number : "<<registrationNumber<<endl;
         return;
       }
+      string getId(){return id;}
+      string getPassword(){return password;}
+      string getFullName(){return name;}
+      void login(){isLoggedIn=true;}
+      void logout(){isLoggedIn=false;}
       //-------------------------------------
       string getRole()override{ return "student";}
       //----------------------------------------------------
@@ -78,6 +83,7 @@ class Student:public User{
                // else if(choice==6) Logout(m);
              }while(choice!=6);
       }
+      
       ~Student()override{}
 };
 #endif

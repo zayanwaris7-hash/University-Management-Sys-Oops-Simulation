@@ -24,18 +24,7 @@ protected:
 public:
     Bus() : wifiAvailable(false) {}
     Bus(string a, string b, int c, int d, string e, float f, bool h) : Vehicle(a, b, c, d, e, f), wifiAvailable(h) {}
-
-    string getType() override { return "bus"; }
-    float Fee() override { return fee; }
-    bool checkAvailability() override { return isAvailible; }
-    void occuppiedSeat(){
-        occupiedSeats++;
-    };
-    int getOccupiedSeat(){
-        if(occupiedSeats==capacity){return 0;}
-        return occupiedSeats;}
-    int getTotalSeat(){return capacity;}
-
+    
     void displayVehicle() override
     {
         cout << "========( BUS DISPLAY )========" << endl;
@@ -50,11 +39,10 @@ public:
         return;
     }
 
-    Bus &AddInfo()
+    Bus &AddInfo(string bid)
     {
         cout << "========( Bus Info )========" << endl;
-        cout << "Enter Bus Id (eg B01) : ";
-        cin >> vehicleId;
+        setId(bid) ;
         cout << endl;
         cout << "Enter Bus Number : ";
         cin >> vehicleNumber;
@@ -110,6 +98,18 @@ public:
        
         return *this;
     }
+    void setId(string a){vehicleId=a;}
+    string getId(){return vehicleId;}
+    string getType() override { return "bus"; }
+    float Fee() override { return fee; }
+    bool checkAvailability() override { return isAvailible; }
+    void occuppiedSeat(){
+        occupiedSeats++;
+    };
+    int getOccupiedSeat(){
+        if(occupiedSeats==capacity){return 0;}
+        return occupiedSeats;}
+    int getTotalSeat(){return capacity;}
 
     ~Bus() override {}
 };

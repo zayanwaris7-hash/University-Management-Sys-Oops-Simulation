@@ -38,7 +38,11 @@ public:
         cout << " Role     : " << role << endl;
         return;
     }
+    string getEmail(){return id;}
+    string getPassword(){return password;}
     string getRole() override { return role; }
+    void login(){isLoggedIn=true;}
+    void logout(){isLoggedIn=false;}
     //--------------------------------
     void addVehicle(Manager m){}
     //--------------------------------------------------
