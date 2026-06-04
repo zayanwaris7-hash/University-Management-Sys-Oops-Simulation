@@ -17,6 +17,10 @@ class Bill{
     public:
       Bill():billId(""),monthlyFee(0.0),fine(0.0),paidStatus(false){}
       Bill(string a,float b,float c,bool d):billId(a),monthlyFee(b),fine(c),paidStatus(d){}
+      string getBill(){return billId;}
+      float getMf(){return monthlyFee;}
+      float getf(){return fine;}
+      bool getpaidStatus(){return paidStatus;}
       void generateBill(string id,float fee){
           billId = id;
           monthlyFee = fee;

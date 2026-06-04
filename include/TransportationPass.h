@@ -17,10 +17,20 @@ class TransportationPass{
      Student* student;
      Route* route;
      string status;
-     Bill* bill;
+     Bill* bill;/*float monthlyFee;
+      float fine;
+      bool paidStatus;*/
     public:
      TransportationPass():passId(""),student(NULL),route(NULL),status("rejected"),bill(NULL){}
      TransportationPass(string a,Student* b,Route* c,string f,Bill* g):passId(a),student(b),route(c),status(f),bill(g){}
+     string getStudId(){return student->getId();}
+     string getRouteId(){return route->getRouteId();}
+     string getBillId(){return bill->getBill();}
+     string getPassId(){return passId;}
+     string getstatus(){return status;}
+     bool getPStatus(){return bill->getpaidStatus();}
+     float getMontlyFees(){return bill->getMf();}
+     float getFine(){return bill->getf();}
      void approvePass(){
         char choice;
         cout<<"Are U Sure U Want To Approve The Pass | Id : "<<passId<<" | (Y for Yes /N for No) : ";

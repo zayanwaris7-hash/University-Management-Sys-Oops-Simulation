@@ -18,7 +18,7 @@ class Vehicle{
     float fee;
     public:
      Vehicle():vehicleId(""),vehicleNumber(""),capacity(0),occupiedSeats(0),assignedRoute(""),isAvailible(false),fee(0.0){}
-     Vehicle(string a, string b,int c,int d,string e,float f):vehicleId(a),vehicleNumber(b),capacity(c),occupiedSeats(d),assignedRoute(e),isAvailible(true),fee(f){}
+     Vehicle(string a, string b,int c,int d,string e,bool z,float f):vehicleId(a),vehicleNumber(b),capacity(c),occupiedSeats(d),assignedRoute(e),isAvailible(z),fee(f){}
      virtual bool checkAvailability()=0;
      virtual void displayVehicle()=0;
      virtual string getType()=0;

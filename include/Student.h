@@ -13,7 +13,6 @@ getRole()*/
 #include"User.h"
 #include"Manager.h"
 #include"TransportationPass.h"
-Manager m;
 using namespace std;
 class Student:public User{
     protected:
@@ -34,11 +33,14 @@ class Student:public User{
       }
       string getId(){return id;}
       string getPassword(){return password;}
+      string getpassId(){return pass->getPassId();}
       string getFullName(){return name;}
       void login(){isLoggedIn=true;}
       void logout(){isLoggedIn=false;}
+      string getregistrationNumber(){return registrationNumber;}
       //-------------------------------------
       string getRole()override{ return "student";}
+      void setPass(TransportationPass* b){pass=b;}
       //----------------------------------------------------
       void  ViewRoute(Manager m){
          

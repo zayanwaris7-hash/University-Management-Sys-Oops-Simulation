@@ -23,7 +23,7 @@ protected:
 
 public:
     Bus() : wifiAvailable(false) {}
-    Bus(string a, string b, int c, int d, string e, float f, bool h) : Vehicle(a, b, c, d, e, f), wifiAvailable(h) {}
+    Bus(string a, string b, int c, int d, string e,bool n, float f, bool h) : Vehicle(a, b, c, d, e,n, f), wifiAvailable(h) {}
     
     void displayVehicle() override
     {
@@ -100,12 +100,19 @@ public:
     }
     void setId(string a){vehicleId=a;}
     string getId(){return vehicleId;}
+    string getVehicleNumber(){return vehicleNumber;}
+
     string getType() override { return "bus"; }
     float Fee() override { return fee; }
     bool checkAvailability() override { return isAvailible; }
+    float getfee(){return fee;}
+    bool chechAvail(){return isAvailible;}
+    bool wificheck(){return wifiAvailable;}
     void occuppiedSeat(){
         occupiedSeats++;
     };
+    int getoccupiedseat(){return occupiedSeats;}
+    string getassigneRoute(){return assignedRoute;}
     int getOccupiedSeat(){
         if(occupiedSeats==capacity){return 0;}
         return occupiedSeats;}

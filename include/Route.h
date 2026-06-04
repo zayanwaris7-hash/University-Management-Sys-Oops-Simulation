@@ -30,6 +30,10 @@ public:
     Route(string a, string b, string c, double d, Bus *e, Van *f) : routeId(a), startPoint(b), endPoint(c), distance(d), assignedBus(e), assignedVan(f) {}
     double calculateDistance() { return distance; }
     string getRouteId() { return routeId; }
+    string getstartPoint(){return startPoint;}
+    string getendPoint(){return endPoint;}
+    string getbusId(){return assignedBus->getId();}
+    string getvanId(){return assignedVan->getId();}
     bool BookSeat(){
         if(assignedBus->getOccupiedSeat() == 0 ){
             cout<<"No Seat Is Availible !"<<endl;

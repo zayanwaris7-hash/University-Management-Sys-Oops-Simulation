@@ -9,8 +9,18 @@ class Van:public Vehicle{
      bool isAirCondAvailable;
     public:
      Van():isAirCondAvailable(false){}
-     Van(string a, string b,int c,int d,string e,float f,bool h):Vehicle(a,b,c,d,e,f),isAirCondAvailable(h){}
-     
+     Van(string a, string b,int c,int d,string e,bool l,float f,bool h):Vehicle(a,b,c,d,e,l,f),isAirCondAvailable(h){}
+     float getfee(){return fee;}
+    bool chechAvail(){return isAvailible;}
+    bool Accheck(){return isAirCondAvailable;}
+    bool checkisAirCondAvailable(){return isAirCondAvailable;}
+    string getVehicleNumber(){return vehicleNumber;}
+    int getoccupiedseat(){return occupiedSeats;}
+    string getassigneRoute(){return assignedRoute;}
+    int getOccupiedSeat(){
+        if(occupiedSeats==capacity){return 0;}
+        return occupiedSeats;}
+    int getTotalSeat(){return capacity;}
      string getId(){return vehicleId;}
      string setId(string a){vehicleId=a;}
      string getType()override{return "van";}
