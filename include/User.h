@@ -21,6 +21,6 @@ class User{
       virtual void menu()=0;
       virtual void display()=0;
       virtual string getRole()=0;
-      virtual ~User()=0;
+      virtual ~User(){};
 };
 #endif

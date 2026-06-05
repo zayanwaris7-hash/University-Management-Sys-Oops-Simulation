@@ -7,8 +7,7 @@ displayPass()*/
 #include<windows.h>
 #include"Student.h"
 #include"Route.h"
-#include"Bus.h"
-#include"Van.h"
+
 #include"Bill.h"
 using namespace std;
 class TransportationPass{
@@ -17,9 +16,7 @@ class TransportationPass{
      Student* student;
      Route* route;
      string status;
-     Bill* bill;/*float monthlyFee;
-      float fine;
-      bool paidStatus;*/
+     Bill* bill;
     public:
      TransportationPass():passId(""),student(NULL),route(NULL),status("rejected"),bill(NULL){}
      TransportationPass(string a,Student* b,Route* c,string f,Bill* g):passId(a),student(b),route(c),status(f),bill(g){}
@@ -52,6 +49,12 @@ class TransportationPass{
             bool cond =route->BookSeat();
             if(cond){
             status="approved";
+            if(route->getAssignedBus()!=NULL){
+                route->getAssignedBus()->occuppiedSeat();
+            }
+            if(route->getAssignedVan()!=NULL){
+                route->getAssignedVan()->occuppiedSeat();
+            }
             cout<<"[STATUS] Processing . ";
             Sleep(1500);
             cout<<". ";
@@ -97,21 +100,17 @@ class TransportationPass{
         }
      }
      void displayPass() {
-        cout << "\n============================================\n";
-        cout << "         TRANSPORTATION PASS DETAILS        \n";
-        cout << "============================================\n";
         cout << " Pass ID     : " << passId << "\n";
         cout << " Pass Status : " << status << "\n";
-        cout << "--------------------------------------------\n";
         if (student != NULL) {
             cout << " --- Student Information --- \n";
-            student->display(); 
+            cout<<"Student Id : "<<student->getId()<<endl;
         } else {
             cout << " Student Info: No student assigned.\n";
         }
         if (route != NULL) {
             cout << " --- Route Information --- \n";
-            route->diplayRoute();
+            cout<<"Route Id : "<<route->getRouteId()<<endl;
         } else {
             cout << " Route Info  : No route assigned.\n";
         }

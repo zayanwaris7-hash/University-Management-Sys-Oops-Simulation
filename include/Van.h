@@ -21,8 +21,9 @@ class Van:public Vehicle{
         if(occupiedSeats==capacity){return 0;}
         return occupiedSeats;}
     int getTotalSeat(){return capacity;}
+    void setAssignroute(string b){assignedRoute =b;}
      string getId(){return vehicleId;}
-     string setId(string a){vehicleId=a;}
+     void setId(string a){vehicleId=a;}
      string getType()override{return "van";}
      float Fee()override{return fee;}
      void occuppiedSeat(){

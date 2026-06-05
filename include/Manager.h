@@ -16,8 +16,7 @@
 #include "Van.h"
 #include "TransportationPass.h"
 using namespace std;
-class Manager
-{
+class Manager{
     protected:
     Admin *admin;
     vector<Student *> users;
@@ -25,21 +24,15 @@ class Manager
     vector<Bus *> Buses;
     vector<Route *> routes;
     vector<TransportationPass *> passes;
-    vector<array<string,2>> studMapPass;
 
 public:
     
     Manager() : admin(NULL), users(), Vans(), Buses(), routes(), passes() {
-        loadAll();
     }
     Manager(Admin *a) : admin(a), users(), Vans(), Buses(), routes(), passes() {
-        loadAll();
     }
-    /*void saveUsers();
-      void saveRoutes();
-      void saveBuses();
-      void saveVans();
-      void savePasses()*/
+
+   
     //------------------------------------
     
     void saveUser()
@@ -47,11 +40,11 @@ public:
         ofstream file("users.txt");
         if (!file.is_open())
             return;
-        if (users.size() != 0)
+        if (!users.empty())
         {
-            for (int i = 0; i < users.size(); i++)
+            for (size_t i = 0; i < users.size(); i++)
             {
-                file << users[i]->getId() << " " << users[i]->getPassword() << " " << users[i]->getFullName() << " " << "false" <<" "<< users[i]->getregistrationNumber() <<" "<<users[i]->getpassId()<< "\n";
+                file << users[i]->getId() << " " << users[i]->getPassword() << " " << users[i]->getFullName() << " " << "false" <<" "<< users[i]->getregistrationNumber() <<" "<<users[i]->getPassId()<< "\n";
             }
             file.close();
         }
@@ -66,8 +59,8 @@ public:
         ofstream file("route.txt");
         if (!file.is_open())
             return;
-        if(routes.size()!=0){
-        for (int i = 0; i < routes.size(); i++)
+        if(!routes.empty()){
+        for (size_t i = 0; i < routes.size(); i++)
         {
             file << routes[i]->getRouteId() << " " << routes[i]->getstartPoint() << " " << routes[i]->getendPoint() << " " << routes[i]->calculateDistance() << " " << routes[i]->getbusId() << " " << routes[i]->getvanId() << "\n";
         }
@@ -76,19 +69,13 @@ public:
          cout << "[Error] Nothing To Save..." << endl;
        }
     }
-    /* string vehicleId;
-    string vehicleNumber;
-    int capacity;
-    int occupiedSeats;
-    string assignedRoute;
-    bool isAvailible;
-    float fee;*/
+  
     void saveBus(){
          ofstream file("bus.txt");
         if (!file.is_open())
             return;
-        if(Buses.size()!=0){
-        for (int i = 0; i < Buses.size(); i++)
+        if(!Buses.empty()){
+        for (size_t i = 0; i < Buses.size(); i++)
         {
             file <<Buses[i]->getId() << " " << Buses[i]->getVehicleNumber() << " " << Buses[i]->getTotalSeat() << " " << Buses[i]->getOccupiedSeat() << " " << Buses[i]->getassigneRoute() << " " << Buses[i]->checkAvailability() <<" "<<Buses[i]->getfee()<<" "<< Buses[i]->wificheck()<< "\n";
         }
@@ -101,8 +88,8 @@ public:
          ofstream file("vans.txt");
         if (!file.is_open())
             return;
-        if(Vans.size()!=0){
-        for (int i = 0; i < Vans.size(); i++)
+        if(!Vans.empty()){
+        for (size_t i = 0; i < Vans.size(); i++)
         {
             file <<Vans[i]->getId() << " " << Vans[i]->getVehicleNumber() << " " << Vans[i]->getTotalSeat() << " " << Vans[i]->getOccupiedSeat() << " " << Vans[i]->getassigneRoute() << " " << Vans[i]->checkAvailability() <<" "<<Vans[i]->getfee()<<" "<< Vans[i]->checkisAirCondAvailable()<< "\n";
         }
@@ -111,21 +98,13 @@ public:
          cout << "[Error] Nothing To Save..." << endl;
        }
     }
-    /* string passId;
-     Student* student;
-     Route* route;
-     string status;
-     Bill* bill;*/
+    
     void savePasses(){
         ofstream file("pases.txt");
         if (!file.is_open())
             return;
-        if(passes.size()!=0){
-            //bill info
-            /*float monthlyFee;
-      float fine;
-      bool paidStatus;*/
-        for (int i = 0; i < passes.size(); i++)
+        if(!passes.empty()){
+        for (size_t i = 0; i < passes.size(); i++)
         {
            file<<passes[i]->getPassId()<<" "<<passes[i]->getStudId()<<" "<<passes[i]->getRouteId()<<" "<<passes[i]->getstatus()<<" "<<passes[i]->getBillId()<<" "<<passes[i]->getMontlyFees()<<" "<<passes[i]->getFine()<<" "<<passes[i]->getPStatus()<<"\n";
         }
@@ -156,8 +135,7 @@ public:
 
         return false;
     }
-
-    //--------------------------
+    //----------------------------------------------
     bool isEmailIsDuplicated(string email)
     {
         if (users.size() != 0)
@@ -206,7 +184,7 @@ public:
     }
     void registerStudent()
     {
-        string email, password, fullName,fname,lname, regNo, ss;
+        string email, password, fullName,fname,lname, regNo, ss,passId;
         int s, r;
         cout << "----------( Sign Up Details )----------" << endl;
         do
@@ -271,7 +249,8 @@ public:
             cout << endl;
         }
         regNo = to_string(s) + "-" + ss + to_string(r);
-        Student *studPtr = new Student(email, password, fullName, false, regNo);
+        passId=email;
+        Student *studPtr = new Student(email, password, fullName, false, regNo,passId);
         users.push_back(studPtr);
     }
     //-------------------------------
@@ -286,7 +265,7 @@ public:
                 admin->login();
                 return "Admin";
             }
-        }
+        
         for (size_t i = 0; i < users.size(); i++)
         {
             if (users[i]->getId() == email && users[i]->getPassword() == password)
@@ -299,10 +278,12 @@ public:
         }
         cout << "Invalid Email or Password! Please try again.\n"
              << endl;
-        return "Invalid";
-    }
+            }
+            return "Invalid";
+}
+    
     //---------------------------------------------------------------
-    void logout(Student *u, Admin *a)
+   void logout(Student *u, Admin *a)
     {
         if (a != NULL)
         {
@@ -386,7 +367,92 @@ public:
             cout << "Van successfully added!" << endl;
         }
     }
+    
+    void delVehicle(){
+         string type, busId, vanId;
+        cout << "--------------( Delete Vehicle Details )--------------" << endl;
+        cout << "Enter Type of Vehicle (bus | van) : ";
+        cin >> type;
+        type = toLowerString(type);
+        while (cin.fail() || (type != "bus" && type != "van"))
+        {
+            cout << "Invalid input! Please enter 'bus' or 'van': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> type;
+            type = toLowerString(type);
+        }
+        if (type == "bus")
+        {
+           
+            cout << "Enter Bus Id (eg B01) : ";
+            cin >> busId;
+               
+            Bus *ptr = searchBus(busId);
+               if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<busId<<" | "<<endl;
+                return;
+            }
+            Buses.erase(remove(Buses.begin(), Buses.end(), ptr), Buses.end());
+            cout << "Bus | id : "<<busId<<" | successfully Deleted!" << endl;
+        }
+        else if (type == "van")
+        {
+            cout << "Enter Van Id (eg B01) : ";
+            cin >> vanId;
+            Van *ptr = searchVans(vanId);
+            if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<busId<<" | "<<endl;
+                return;
+            }
+             Vans.erase(remove(Vans.begin(), Vans.end(), ptr), Vans.end());
+           cout << "Van | id : "<<vanId<<" | successfully Deleted!" << endl;
+        }
+    }
     //---------------------------------
+    void updateVehicleDetail(){
+          string type, busId, vanId;
+        cout << "--------------( Update Vehicle Details )--------------" << endl;
+        cout << "Enter Type of Vehicle (bus | van) : ";
+        cin >> type;
+        type = toLowerString(type);
+        while (cin.fail() || (type != "bus" && type != "van"))
+        {
+            cout << "Invalid input! Please enter 'bus' or 'van': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> type;
+            type = toLowerString(type);
+        }
+        if (type == "bus")
+        {
+            
+            cout << "Enter Bus Id (eg B01) : ";
+            cin >> busId;
+            Bus *ptr = searchBus(busId);
+            if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<busId<<" | "<<endl;
+                return;
+            }
+            ptr->AddInfo(busId);
+            cout << "Bus successfully updated !" << endl;
+        }
+        else if (type == "van")
+        {
+           
+            cout << "Enter Van Id (eg B01) : ";
+            cin >> vanId;
+            Van *ptr = searchVans(vanId);
+            if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<vanId<<" | "<<endl;
+                return;
+            }
+            ptr->AddInfo(vanId);
+            cout << "Van successfully updated!" << endl;
+        }
+    }
+
+    //-------------------------------
     bool isRouoteIdDup(string rId)
     {
         if (routes.size() != 0)
@@ -398,46 +464,36 @@ public:
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
     //-----------------------------
-    void loadUsers()
-    {
+    void loadUsers() {
         ifstream file("users.txt");
-        if (!file.is_open())
-        {
+        if (!file.is_open()) {
             cout << "[Error] Could not open users.txt for loading." << endl;
             return;
         }
-        for (size_t i = 0; i < users.size(); i++)
-        {
-            delete users[i];
+        for (auto user : users) {
+            delete user;
         }
         users.clear();
-        string id, password, fullName, statusStr, regNo,passId;
-        while (file >> id >> password >> fullName >> statusStr >> regNo>>passId)
-        {
+
+        string id, password, fullName, statusStr, regNo, passId;
+        while (file >> id >> password >> fullName >> statusStr >> regNo >> passId) {
             bool loginStatus = (statusStr == "true");
-            Student *studPtr = new Student(id, password, fullName, loginStatus, regNo);
+            Student *studPtr = new Student(id, password, fullName, loginStatus, regNo,passId);
             users.push_back(studPtr);
-            studMapPass.push_back(array<string,2>{id,passId});
         }
         file.close();
         cout << "[STATUS] Users Loaded Successfully! Count: " << users.size() << endl;
     }
-  /*tring vehicleId;
-    string vehicleNumber;
-    int capacity;
-    int occupiedSeats;
-    string assignedRoute;
-    bool isAvailible;
-    float fee;*/
+
     void loadBus(){
         ifstream file("bus.txt");
         if (!file.is_open())
         {
-            cout << "[Error] Could not open users.txt for loading." << endl;
+            cout << "[Error] Could not open bus.txt for loading." << endl;
             return;
         }
         for (size_t i = 0; i < Buses.size(); i++)
@@ -455,20 +511,12 @@ public:
             Buses.push_back(bptr);
         }
     }
-    void AssignPassesToStud(){
-        if(studMapPass.size() != 0){
-            for(size_t i=0;i<studMapPass.size();i++){
-             Student* ptr=searchStudent(studMapPass[i][0]);
-             TransportationPass* p=searchPass(studMapPass[i][1]);
-                ptr->setPass(p);
-            }
-        }
-    }
+    
     void loadVan(){
         ifstream file("vans.txt");
         if (!file.is_open())
         {
-            cout << "[Error] Could not open users.txt for loading." << endl;
+            cout << "[Error] Could not open van.txt for loading." << endl;
             return;
         }
         for (size_t i = 0; i < Vans.size(); i++)
@@ -486,19 +534,14 @@ public:
             Vans.push_back(bptr);
         }
     }
-    /*    string routeId;
-    string startPoint;
-    string endPoint;
-    double distance;
-    Bus *assignedBus;
-    Van *assignedVan;*/
+   
     void loadRoute(){
       string rI,eP,sP,bId,vId;
       double d;
        ifstream file("route.txt");
         if (!file.is_open())
         {
-            cout << "[Error] Could not open users.txt for loading." << endl;
+            cout << "[Error] Could not open route.txt for loading." << endl;
             return;
         }
         for (size_t i = 0; i < routes.size(); i++)
@@ -514,19 +557,12 @@ public:
         }
 
     }
-    
-    /*  string passId;
-     Student* student;
-     Route* route;
-     string status;
-     Bill* bill;/*float monthlyFee;
-      float fine;
-      bool paidStatus;*/
+
     void loadPasses(){
         ifstream file("pases.txt");
         if (!file.is_open())
         {
-            cout << "[Error] Could not open users.txt for loading." << endl;
+            cout << "[Error] Could not open Pasess.txt for loading." << endl;
             return;
         }
         for (size_t i = 0; i < passes.size(); i++)
@@ -576,19 +612,76 @@ public:
 
         cout << "[STATUS] Transport Pass Added Successfully!" << endl;
     }
-    void ViewAllRoute()
+    int ViewAllRoute()
     {
         cout << "---------------( Routes )---------------" << endl;
         if (routes.size() == 0)
         {
             cout << " No Route Availible Yet . " << endl;
-            return;
+            return -1;
         }
         for (size_t i = 0; i < routes.size(); i++)
         {
             cout << "========( Route No " << i + 1 << " )===============" << endl;
             routes[i]->diplayRoute();
             cout << endl;
+        }
+        return 2;
+    }
+    
+    void assignVehicleToRoute(){
+        string rId,vId,type;
+        int cond=ViewAllRoute();
+        if(cond == 2 ){
+            cout << "--------------( Route ID )--------------" << endl;
+            cout<<"Enter Route Id : ";
+            cin>>rId;
+            Route* ptr1=searchRoute(rId);
+            if(ptr1==NULL){
+                cout<<"[STATUS] No Such Route Found with | id : "<<rId<<" | "<<endl;
+                return;
+            }
+            cout << "--------------( Vehicle ID )--------------" << endl;
+            cout << "Enter Type of Vehicle (bus | van) : ";
+            cin >> type;
+            type = toLowerString(type);
+            while (cin.fail() || (type != "bus" && type != "van"))
+            {
+            cout << "Invalid input! Please enter 'bus' or 'van': ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> type;
+            type = toLowerString(type);
+            }
+            if (type == "bus")
+        {
+            
+            cout << "Enter Bus Id (eg B01) : ";
+            cin >> vId;
+            Bus *ptr = searchBus(vId);
+            if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<vId<<" | "<<endl;
+                return;
+            }
+            ptr1->assignBus(ptr);
+            ptr->setAssignroute(ptr1->getRouteId());
+            cout << "Bus | id : "<<ptr->getId()<<"successfully Assigned to Route | id : "<<ptr1->getRouteId()<<" !" << endl;
+        }
+        else if (type == "van")
+        {
+            
+            cout << "Enter Van Id (eg B01) : ";
+            cin >> vId;
+            Van *ptr = searchVans(vId);
+            if(ptr==NULL){
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<vId<<" | "<<endl;
+                return;
+            }
+            ptr1->assignVan(ptr);
+            ptr->setAssignroute(ptr1->getRouteId());
+            cout << "Van | id : "<<ptr->getId()<<"successfully Assigned to Route | id : "<<ptr1->getRouteId()<<" !" << endl;
+        }
+
         }
     }
     //-------------------------------------------
@@ -599,7 +692,7 @@ public:
         ViewAllRoute();
         cout << "Enter Route Number To Apply : ";
         cin >> routeNo;
-        while (cin.fail() || routeNo < 1 || routeNo > routes.size())
+        while (cin.fail() || routeNo < 1 || static_cast<size_t>(routeNo) > routes.size())
         {
             cout << "Invalid choice! Please enter a number between 1 to " << routes.size() << ":\nEnter Route Number To Apply : ";
             cin.clear();
@@ -714,7 +807,6 @@ public:
         loadVan();
         loadRoute();
         loadPasses();
-        AssignPassesToStud();
       }
     //----------------------------
     void addRoute()
@@ -735,10 +827,141 @@ public:
         cout << "Route successfully added!" << endl;
     }
     //--------------------------------------
-
+    void veiwAll(){
+         cout << "---------------( Students )---------------" << endl;
+        if (users.size() == 0)
+        {
+            cout << " No Student  Yet . " << endl;
+        }
+        for (size_t i = 0; i < users.size(); i++)
+        {
+            cout << "========( Student No " << i + 1 << " )===============" << endl;
+            users[i]->display();
+            cout << endl;
+        }
+        //----
+            cout << "---------------( Routes )---------------" << endl;
+        if (routes.size() == 0)
+        {
+            cout << " No Route Availible Yet . " << endl;
+        }
+        for (size_t i = 0; i < routes.size(); i++)
+        {
+            cout << "========( Route No " << i + 1 << " )===============" << endl;
+            routes[i]->diplayRoute();
+            cout << endl;
+        }
+        //----
+            cout << "---------------( Buses )---------------" << endl;
+        if (Buses.size() == 0)
+        {
+            cout << " No Buses  Yet . " << endl;
+        }
+        for (size_t i = 0; i < Buses.size(); i++)
+        {
+            cout << "========( Bus No " << i + 1 << " )===============" << endl;
+            Buses[i]->displayVehicle();
+            cout << endl;
+        }
+        //----
+            cout << "---------------( Vans )---------------" << endl;
+        if   (Vans.size() == 0)
+        {
+            cout << " No  Vans  Yet . " << endl;
+        }
+        for (size_t i = 0; i <  Vans.size(); i++)
+        {
+            cout << "========( Van No " << i + 1 << " )===============" << endl;
+          Vans[i]->displayVehicle();
+            cout << endl;
+        }
+        //----
+            cout << "---------------( Passes )---------------" << endl;
+        if   (passes.size() == 0)
+        {
+            cout << " No  Passes  Yet . " << endl;
+        }
+        for (size_t i = 0; i <  passes.size(); i++)
+        {
+            cout << "========( pass No " << i + 1 << " )===============" << endl;
+          passes[i]->displayPass();
+            cout << endl;
+        }
+    }
+    void ViewPendingStud(){
+        
+            cout << "---------------( Pending Passes )---------------" << endl;
+        if   (passes.size() == 0)
+        {
+            cout << " No Pending  Passes  Yet . " << endl;
+        }
+        for (size_t i = 0; i <  passes.size(); i++)
+        {   
+            if(passes[i]->getRouteId()=="pending"){
+                cout << "========( pass No " << i + 1 << " )===============" << endl;
+              passes[i]->displayPass();
+                cout << endl;
+            }
+        }
+        
+    }
+    void passAcceptionOrRej() {
+    if (passes.empty()) {
+        cout << "[NOTICE] No transportation passes available to review." << endl;
+        return;
+    }
+    int choice;
+    ViewPendingStud();
+    while (true) {
+        cout << "Enter Pass No to Move Forward (0 to go back): ";
+        cin >> choice;
+        if (cin.fail()) {
+            cout << "[Error] Invalid input type. Please enter a number." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        if (choice < 0 || choice > (int)passes.size()) {
+            cout << "[Error] Number out of range! Try a number between 0 and " << passes.size() << "." << endl;
+            continue;
+        }
+        break;
+    }
+    if (choice == 0) {
+        cout << "[STATUS] Returning to previous menu..." << endl;
+        return;
+    }
+    TransportationPass* selectedPass = passes[choice - 1];
+    int action;
+    cout << "\nSelected Pass Details:" << endl;
+    selectedPass->displayPass();
+    while (true) {
+        cout << "\n---[ Action Menu ]---" << endl;
+        cout << "1. Accept / Approve Pass" << endl;
+        cout << "2. Reject Pass" << endl;
+        cout << "3. Cancel (Keep Pending)" << endl;
+        cout << "Select an option (1-3): ";
+        cin >> action;
+        if (cin.fail() || action < 1 || action > 3) {
+            cout << "[Error] Invalid selection. Choose 1, 2, or 3." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        break;
+    }
+    if (action == 1) {
+        selectedPass->approvePass();
+        cout << "[STATUS] Pass ID: " << selectedPass->getPassId() << " has been APPROVED." << endl;
+    } else if (action == 2) {
+        selectedPass->rejectPass();
+        cout << "[STATUS] Pass ID: " << selectedPass->getPassId() << " has been REJECTED." << endl;
+    } else {
+        cout << "[STATUS] Operation canceled. Pass remains pending." << endl;
+    }
+}
     ~Manager()
     {
-        saveAll();
         delete admin;
         for (size_t i = 0; i < users.size(); i++)
         {

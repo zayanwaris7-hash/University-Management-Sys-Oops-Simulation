@@ -48,20 +48,19 @@ public:
     
     void diplayRoute()
     {
-        cout << "========( ROUTE DISPLAY )========" << endl;
         cout << "Route ID     : " << routeId << endl;
         cout << "Start Point  : " << startPoint << endl;
         cout << "End Point    : " << endPoint << endl;
         cout << "Distance     : " << distance << " km" << endl;
         cout << "Bus Link : ";
         if (assignedBus != NULL){
-            cout << "Bus Assigned : " << endl;
-            assignedBus->displayVehicle();
+            cout << "Bus Assigned Id : " ;
+           cout<< assignedBus->getId()<< endl;
         }else{ cout<<"No Bus Assined Yet ."<<endl;}
         cout << "Van Link : ";
          if (assignedVan != NULL){
-            assignedVan->displayVehicle();
-            cout << "Van Assigned : " << endl;
+             cout << "Van Assigned Id : " ;
+            cout<< assignedVan->getId()<< endl;
         }
         else{cout << "No Van Assigned To This Route yet ." << endl;}
     }

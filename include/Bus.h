@@ -38,67 +38,75 @@ public:
         cout << "Wifi Availible : " << (wifiAvailable ? "Yes" : "No") << endl;
         return;
     }
-
-    Bus &AddInfo(string bid)
+    void setAssignroute(string b){assignedRoute=b;}
+    Bus& AddInfo(string bid) 
+{
+    cout << "========( Bus Info )========" << endl;
+    setId(bid);
+    cout << endl;
+    
+    cout << "Enter Bus Number : ";
+    cin >> vehicleNumber;
+    cout << endl;
+    
+    // --- Capacity Validation ---
+    cout << "Enter Capacity in Bus : ";
+    cin >> capacity;
+    while (cin.fail() || cin.peek() == '.' || capacity < 30 || capacity > 50)
     {
-        cout << "========( Bus Info )========" << endl;
-        setId(bid) ;
-        cout << endl;
-        cout << "Enter Bus Number : ";
-        cin >> vehicleNumber;
-        cout << endl;
-        cout << "Enter Capacity in Bus : ";
+        cout << "Invalid ! Capacity Must be in between (30-50)\nEnter Capacity : " << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> capacity;
-        while (cin.fail() || cin.peek() == '.' || capacity < 30 ||  capacity > 50)
-        {
-            cout << "Invalid ! Capacity Must be in between (30-50)\n Enter Capcity : " << endl;
-            
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            
-            cin >> capacity;
-        }
-        cout<<endl;
-        cout << "Enter Reserved Seat in Bus : ";
-        cin >> occupiedSeats;
-        while (cin.fail() || cin.peek() == '.' || capacity < occupiedSeats ||  occupiedSeats<0)
-        {
-            cout << "Invalid ! Capacity is "<<capacity<<"\n Enter Reserved Seat : " << endl;
-            
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            
-            cin >> occupiedSeats;
-        }
-        cout << endl;
-        cout<<"Enter route Id To Assined : ";
-        cin>>assignedRoute;
-        cout << endl;
-        cout<<"Enter Fees Per Seat : ";
-        cin>>fee;
-        while(cin.fail())
-        {
-            cout<<"Inavlid ! (Fees Price Must Be In float .)\nEnter Fees Per Seat : ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> fee;
-        }
-        cout << endl;
-        char ans;
-        cout<<"Is Wifi Availible (Y/N) : "<<endl;
-        cin>>ans;
-        while(cin.fail() || ans!='y' || ans!='n' || ans!='Y' || ans!='N'){
-            cout<<"Inavlid ! Enter in (Y or y/N or n) : ";
-             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> ans;
-        }
-        if(ans=='Y' ||ans=='y') wifiAvailable=true;
-        else  wifiAvailable=false;
-       
-        return *this;
     }
-    void setId(string a){vehicleId=a;}
+    cout << endl;
+    
+    // --- Reserved Seats Validation ---
+    cout << "Enter Reserved Seat in Bus : ";
+    cin >> occupiedSeats;
+    while (cin.fail() || cin.peek() == '.' || occupiedSeats < 0 || occupiedSeats > capacity)
+    {
+        cout << "Invalid ! Capacity is " << capacity << "\nEnter Reserved Seat : " << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> occupiedSeats;
+    }
+    cout << endl;
+    
+    assignedRoute = "Not Assigned Yet";
+    cout << endl;
+    
+    // --- Fee Validation ---
+    cout << "Enter Fees Per Seat : ";
+    cin >> fee;
+    while (cin.fail())
+    {
+        cout << "Invalid ! (Fees Price Must Be In float .)\nEnter Fees Per Seat : ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> fee;
+    }
+    cout << endl;
+    
+    // ------
+    char ans;
+    cout << "Is Wifi Available (Y/N) : " << endl;
+    cin >> ans;
+    while (cin.fail() || (ans != 'y' && ans != 'n' && ans != 'Y' && ans != 'N')) {
+        cout << "Invalid ! Enter in (Y or y/N or n) : ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin >> ans;
+    }
+    
+    if (ans == 'Y' || ans == 'y') {
+        wifiAvailable = true;
+    } else {
+        wifiAvailable = false;
+    }
+   
+    return *this;
+}void setId(string a){vehicleId=a;}
     string getId(){return vehicleId;}
     string getVehicleNumber(){return vehicleNumber;}
 
@@ -117,7 +125,9 @@ public:
         if(occupiedSeats==capacity){return 0;}
         return occupiedSeats;}
     int getTotalSeat(){return capacity;}
-
+    bool operator==(const Bus& other) const {
+        return vehicleId == other.vehicleId;
+    }
     ~Bus() override {}
 };
 #endif
