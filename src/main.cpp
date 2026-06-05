@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include<fstream>
 #include "Manager.h"
 #include"Admin.h"
 
@@ -81,7 +82,7 @@ int main() {
                             case 7: manager.passAcceptionOrRej(); break;
                             case 8: manager.veiwAll(); break;
                             case 9:
-                                manager.logout(nullptr, new Admin());
+                                manager.logout(NULL, new Admin());
                                 break;
                             default:
                                 cout << "Invalid choice! Range is 1-9.\n";
@@ -131,7 +132,7 @@ int main() {
                                 cout << "[Notice] Resetting transport application constraints for this student pointer.\n";
                                 break;
                             case 5:
-                                manager.logout(activeStudent, nullptr); // Safely isolate student states
+                                manager.logout(activeStudent, NULL); // Safely isolate student states
                                 break;
                             default:
                                 cout << "Invalid choice! Range is 1-5.\n";

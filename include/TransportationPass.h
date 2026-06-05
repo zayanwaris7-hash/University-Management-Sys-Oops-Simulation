@@ -28,6 +28,7 @@ class TransportationPass{
      bool getPStatus(){return bill->getpaidStatus();}
      float getMontlyFees(){return bill->getMf();}
      float getFine(){return bill->getf();}
+     
      void approvePass(){
         char choice;
         cout<<"Are U Sure U Want To Approve The Pass | Id : "<<passId<<" | (Y for Yes /N for No) : ";

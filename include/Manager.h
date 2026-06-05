@@ -265,9 +265,8 @@ public:
                 admin->login();
                 return "Admin";
             }
-        
-        for (size_t i = 0; i < users.size(); i++)
-        {
+        }
+        for (size_t i = 0; i < users.size(); i++){
             if (users[i]->getId() == email && users[i]->getPassword() == password)
             {
                 cout << "Login Successful! Welcome, " << users[i]->getFullName() << ".\n"
@@ -276,11 +275,9 @@ public:
                 return "Student";
             }
         }
-        cout << "Invalid Email or Password! Please try again.\n"
-             << endl;
-            }
-            return "Invalid";
-}
+        cout << "Invalid Email or Password! Please try again."<< endl;
+        return "Invalid";
+    }
     
     //---------------------------------------------------------------
    void logout(Student *u, Admin *a)
@@ -298,7 +295,7 @@ public:
                  << endl;
             a->logout();
         }
-        if (users.size() != 0)
+        if (!users.empty())
         {
             for (size_t i = 0; i < users.size(); i++)
             {
@@ -313,7 +310,7 @@ public:
                     cout << ". ";
                     cout << "Logout Successful!."
                          << endl;
-                    users[i]->login();
+                    users[i]->logout();
                 }
             }
         }
@@ -402,7 +399,7 @@ public:
             cin >> vanId;
             Van *ptr = searchVans(vanId);
             if(ptr==NULL){
-                cout<<"[STATUS] No Such Vehicle Found with | id : "<<busId<<" | "<<endl;
+                cout<<"[STATUS] No Such Vehicle Found with | id : "<<vanId<<" | "<<endl;
                 return;
             }
              Vans.erase(remove(Vans.begin(), Vans.end(), ptr), Vans.end());
@@ -474,15 +471,15 @@ public:
             cout << "[Error] Could not open users.txt for loading." << endl;
             return;
         }
-        for (auto user : users) {
-            delete user;
+        for (size_t i=0;i<users.size();i++) {
+            delete users[i];
         }
         users.clear();
 
         string id, password, fullName, statusStr, regNo, passId;
         while (file >> id >> password >> fullName >> statusStr >> regNo >> passId) {
             bool loginStatus = (statusStr == "true");
-            Student *studPtr = new Student(id, password, fullName, loginStatus, regNo,passId);
+            Student *studPtr = new Student(id, password, fullName, loginStatus, regNo, passId);
             users.push_back(studPtr);
         }
         file.close();
@@ -891,13 +888,13 @@ public:
     void ViewPendingStud(){
         
             cout << "---------------( Pending Passes )---------------" << endl;
-        if   (passes.size() == 0)
+        if   (passes.empty())
         {
             cout << " No Pending  Passes  Yet . " << endl;
         }
         for (size_t i = 0; i <  passes.size(); i++)
         {   
-            if(passes[i]->getRouteId()=="pending"){
+            if(passes[i]->getstatus()=="pending"){
                 cout << "========( pass No " << i + 1 << " )===============" << endl;
               passes[i]->displayPass();
                 cout << endl;
